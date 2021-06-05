@@ -1,6 +1,10 @@
 # Arduino-Weather-Station
 Arduino Weather Station for University project
-<iframe width="560" height="350" src="https://www.tinkercad.com/embed/eK3le88KE1L?editbtn=1" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+
+![image](https://user-images.githubusercontent.com/47832737/120889897-b3466700-c5ff-11eb-86a4-1987b03602dd.png)
+
+Povezava do TinkerCad projekta:
+https://www.tinkercad.com/things/eK3le88KE1L-arduino-weather-station
 
 Pri LCD zaslonu Nokia 5110 sem naletel na kar nekaj težav, zato sem se odločil projekt realizirati s pomočjo
 1602A LCD-ja. 
