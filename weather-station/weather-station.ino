@@ -1,20 +1,24 @@
 
-
-// include the library code:
 #include <LiquidCrystal.h>
-
-// initialize the library with the numbers of the interface pins
-LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+#include <Arduino.h>
+ LiquidCrystal lcd(7, 8, 9, 10, 11 , 12);
 
 int val;
-int tempPin = 1;  //št. pina na arduinu
-const int ledWarm = 8;
-const int ledCold = 7;
+int tempPin = 1; //št. pina na arduinu
+const int ledWarm = 2;
+const int ledCold = 4;
+
+void blinkLED(int pin)
+{
+  digitalWrite(pin, HIGH); // LED on
+  digitalWrite(pin, LOW); // LED off
+}
 
 void setup() {
+  Serial.begin(9600);
   //nastavim resolucijo ekrančka
   lcd.begin(16, 2);
-  lcd.print("Temp: ");
+  lcd.write("Temp: ");
   
   //led -> output
   pinMode(ledWarm, OUTPUT); 
@@ -23,31 +27,22 @@ void setup() {
 
 void loop() {
   val = analogRead(tempPin);
-  float mv = ( val/1024.0)*5000;
-  float cel = mv/10;
-  float farh = (cel*9)/5 + 32;
-  // set the cursor to column 0, line 1
-  // (note: line 1 is the second row, since counting begins with 0):
-  lcd.setCursor(6, 0);
-  // print the number of seconds since reset:
-  lcd.print(cel);
-  lcd.print(" *C");
+  double cel = val*110.0/1023;
+  Serial.println(cel);
+  double farh = (cel*9)/5 + 32;
   
-  lcd.setCursor(6, 1);
-  // print the number of seconds since reset:
-  lcd.print(farh);
-  lcd.print(" *F");
+  lcd.setCursor(7, 0);
+  lcd.write(cel);
+  lcd.write(" *C");
   
-  if (cel < 5) {
+  lcd.setCursor(7, 1);
+  lcd.write(farh);
+  lcd.write(" *F");
+  
+  if (cel < 5.0) {
     blinkLED(ledCold);
   }
-  else {
+  else if (cel > 25.0) {
     blinkLED(ledWarm);
   }
-}
-
-void blinkLED(int pin)
-{
-  digitalWrite(pin, HIGH); // LED on
-  digitalWrite(pin, LOW); // LED off
 }
